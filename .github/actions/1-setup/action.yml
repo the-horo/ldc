@@ -108,7 +108,7 @@ runs:
       uses: symmetryinvestments/gha-setup-ninja@v2
 
     - name: Install D host compiler
-      uses: dlang-community/setup-dlang@v1
+      uses: dlang-community/setup-dlang@v2
       with:
         compiler: ldc-latest
     - name: 'Posix: Clear LD_LIBRARY_PATH env variable' # don't use host druntime/Phobos .so/.dylib etc.

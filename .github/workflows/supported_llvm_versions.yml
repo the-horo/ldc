@@ -49,7 +49,7 @@ jobs:
       - name: Install ninja
         uses: symmetryinvestments/gha-setup-ninja@v2
       - name: Install D host compiler
-        uses: dlang-community/setup-dlang@v1
+        uses: dlang-community/setup-dlang@v2
         with:
           compiler: ${{ matrix.host_dc }}
       - name: Clear LD_LIBRARY_PATH to prevent loading host compiler libs
