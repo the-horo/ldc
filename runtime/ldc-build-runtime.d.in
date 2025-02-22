@@ -3,6 +3,7 @@ module ldcBuildRuntime;
 import core.stdc.stdlib : exit;
 import std.algorithm;
 import std.array;
+import std.conv;
 import std.file;
 import std.path;
 import std.stdio;
@@ -23,7 +24,9 @@ struct Config {
     bool systemZlib;
     string[string] cmakeVars;
     string installWithSuffix;
+    bool confPreferDir;
 }
+enum hostHasDirConfig = @CONF_PREFER_DIR_D_BOOLEAN@;
 
 version (Windows) enum exeSuffix = ".exe";
 else              enum exeSuffix = "";
@@ -34,6 +37,7 @@ Config config;
 int main(string[] args) {
     enum exeName = "ldc2" ~ exeSuffix;
     defaultLdcExecutable = buildPath(thisExePath.dirName, exeName);
+    config.confPreferDir = hostHasDirConfig;
 
     parseCommandLine(args);
 
@@ -175,6 +179,7 @@ void runCMake() {
             "-DCONF_INST_DIR=", // don't install/overwrite existing etc/ldc2.conf!
         ];
     }
+    if (config.confPreferDir)       args ~= "-DCONF_PREFER_DIR=ON";
 
     foreach (pair; config.cmakeVars.byPair)
         args ~= "-D" ~ pair[0] ~ '=' ~ pair[1];
@@ -346,6 +351,7 @@ void parseCommandLine(string[] args) {
             "j",           "Number of parallel build jobs", &config.numBuildJobs,
             "systemZlib",  "Use system zlib instead of Phobos' vendored version", &config.systemZlib,
             "installWithSuffix", "Install the built libraries to '<directory containing LDC executable>/../lib<suffix>/'", &config.installWithSuffix,
+	    "confPreferDir", "Prefer the directory variant of ldc2.conf (default: " ~ config.confPreferDir.to!string ~ ")", &config.confPreferDir,
         );
 
         // getopt() has removed all consumed args from `args`
