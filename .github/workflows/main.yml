@@ -171,6 +171,14 @@ jobs:
       - name: 'macOS 15: Use host LDC (with Xcode-compatible LLVM version) as bootstrap LDC'
         if: matrix.os == 'macos-15'
         run: ln -s $(dirname $(dirname $(which ldmd2))) ../bootstrap-ldc
+
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
+        with:
+          ## limits ssh access and adds the ssh public key for the user which triggered the workflow
+          limit-access-to-actor: true
+          wait-timeout-minutes: 5
+
       - name: Build LDC with PGO instrumentation & gather profile from compiling default libs
         if: matrix.with_pgo
         uses: ./.github/actions/2a-build-pgo
