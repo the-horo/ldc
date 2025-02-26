@@ -172,12 +172,10 @@ jobs:
         if: matrix.os == 'macos-15'
         run: ln -s $(dirname $(dirname $(which ldmd2))) ../bootstrap-ldc
 
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
         with:
-          ## limits ssh access and adds the ssh public key for the user which triggered the workflow
           limit-access-to-actor: true
-          wait-timeout-minutes: 5
 
       - name: Build LDC with PGO instrumentation & gather profile from compiling default libs
         if: matrix.with_pgo
