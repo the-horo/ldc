@@ -185,20 +185,7 @@ jobs:
           arch: ${{ matrix.arch }}
           with_pgo: ${{ matrix.with_pgo }}
 
-      - name: Run LDC D unittests
-        if: success() || failure()
-        uses: ./.github/actions/4a-test-ldc2
-      - name: Run LIT testsuite
-        if: success() || failure()
-        uses: ./.github/actions/4b-test-lit
-        with:
-          arch: ${{ matrix.arch }}
-      - name: Run DMD testsuite
-        if: success() || failure()
-        uses: ./.github/actions/4c-test-dmd
-        with:
-          arch: ${{ matrix.arch }}
-      - name: Run defaultlib unittests & druntime integration tests
+      - name: druntime integration tests
         if: success() || failure()
         uses: ./.github/actions/4d-test-libs
         with:

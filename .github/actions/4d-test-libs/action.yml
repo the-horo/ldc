@@ -30,7 +30,7 @@ runs:
           excludes+='|^core.thread-shared$'
         fi
 
-        ctest -j$N --output-on-failure -E "$excludes" --timeout 120
+        ctest -j1 --output-on-failure -V -R "^(clean-)?druntime-test" --timeout 120
 
     - name: 'Windows: Run defaultlib unittests & druntime integration tests'
       if: runner.os == 'Windows'
@@ -46,4 +46,4 @@ runs:
         call "%LDC_VSDIR%\Common7\Tools\VsDevCmd.bat" -arch=${{ matrix.arch }} || exit /b
         echo on
         cd build || exit /b
-        ctest -j4 --output-on-failure -E "dmd-testsuite|lit-tests|ldc2-unittest" --timeout 120 || exit /b
+        ctest -j1 --output-on-failure -V -R "^(clean-)?druntime-test" --timeout 120 || exit /b

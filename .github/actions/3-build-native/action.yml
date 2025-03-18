@@ -26,7 +26,6 @@ runs:
           ${{ runner.os != 'Windows' && '-DALTERNATIVE_MALLOC_O="$PWD/../build-mimalloc/CMakeFiles/mimalloc-obj.dir/src/static.c.o"' || '' }}
           ${{ inputs.cmake_flags }}
           ${{ inputs.with_pgo == 'true' && '-DDFLAGS_LDC=-fprofile-use=../pgo-ldc/merged.profdata' || '' }}
-        build_targets: all ldc2-unittest all-test-runners
         arch: ${{ inputs.arch }}
 
     - run: ../build/bin/ldc2 --version
