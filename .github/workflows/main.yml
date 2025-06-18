@@ -151,10 +151,11 @@ jobs:
       - name: 'test macOS'
         if: runner.os == 'macOS'
         run: |
+          set -eux
           cat > file <<EOF
           foo
           bar
-          "deafult":
+          "default":
           baz
           default:
           EOF
