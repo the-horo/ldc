@@ -147,6 +147,20 @@ jobs:
         with:
           submodules: true
           fetch-depth: 50
+      - name: 'Test macOS sed'
+        if: runner.os == 'macOS'
+	run: |
+	  cat > file <<EOF
+	  foo
+	  bar
+	  "deafult":
+	  baz
+	  default:
+	  EOF
+
+          sed -E '/^"?default"?:$/q' file
+          sed -E -i '' '/^"?default"?:$/q' file
+	  cat file
       - name: Install prerequisites
         if: |
           !startsWith(matrix.container_image, 'alpine')
