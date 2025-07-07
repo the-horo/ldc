@@ -68,9 +68,9 @@ endif
 include ../common.mak
 
 $(OBJDIR)/%$(DOTEXE).dSYM: $(OBJDIR)/%$(DOTEXE)
-	dsymutil $<
+	dsymutil $< || touch $@
 
-ifeq ($(OS),"osx")
+ifeq ($(OS),osx)
 tests_without_exe = line_trace_21656 rt_trap_exceptions_drt_gdb
 exes = $(filter-out $(tests_without_exe),$(TESTS))
 $(exes:%=$(OBJDIR)/%.done): $(OBJDIR)/%.done: $(OBJDIR)/%$(DOTEXE) $(OBJDIR)/%$(DOTEXE).dSYM
