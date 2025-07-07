@@ -68,7 +68,7 @@ endif
 include ../common.mak
 
 $(OBJDIR)/%$(DOTEXE).dSYM: $(OBJDIR)/%$(DOTEXE)
-	dsymutil $< || touch $@
+	dsymutil $<
 
 ifeq ($(OS),osx)
 tests_without_exe = line_trace_21656 rt_trap_exceptions_drt_gdb
